@@ -6,23 +6,26 @@ import pydirectinput
 import time
 from math import sqrt,pi,atan
 import math
+import requests
 
-m_vecViewOffset = (0x108)
-m_iHealth =(0x100)
-m_vecOrigin = (0x138)
-dwClientState = (0x588FEC)
-dwClientState_ViewAngles = (0x4D90)
-dwEntitityList = (0x4DA215C)
-dwLocalPlayer = (0xD892CC)
-m_iTeamNum = (0xF4)
-dwGlowObjectManager = (0x52EA5D0)
-m_iGlowIndex =(0xA438)
-m_iObserverMode = (0x3378)
-m_dwBoneMatrix = (0x26A8)
-m_bDormant = (0xED)
-m_iFOV = (0x31E4)
-dwForceJump = (0x524BF4C)
-m_fFlags = (0x104)
+
+
+offsets = 'https://raw.githubusercontent.com/kadeeq/ProjectX/main/offsets/offsets.json'
+response = requests.get( offsets ).json()
+
+m_vecViewOffset = int( response["netvars"]["m_vecViewOffset"] )
+m_iHealth =int( response["netvars"]["m_iHealth"] )
+m_vecOrigin = int( response["netvars"]["m_vecOrigin"] )
+dwClientState = int( response["signatures"]["dwClientState"] )
+dwClientState_ViewAngles = int( response["signatures"]["dwClientState_ViewAngles"] )
+dwEntitityList = int( response["signatures"]["dwEntityList"] )
+dwLocalPlayer = int( response["signatures"]["dwLocalPlayer"] )
+m_iTeamNum = (int( response["netvars"]["m_iTeamNum"] )
+dwGlowObjectManager = int( response["signatures"]["dwGlowObjectManager"] )
+m_iGlowIndex =int( response["netvars"]["m_iGlowIndex"] )
+m_iFOV = int(respone["netvars"]["m_iFOV"])
+dwForceJump = int( response["signatures"]["dwForceJump"] )
+m_fFlags = int( response["netvars"]["m_fFlags"] )
 switch = 0
 pm = pymem.Pymem("csgo.exe")
 client = pymem.process.module_from_name(pm.process_handle, "client.dll").lpBaseOfDll
